@@ -10,8 +10,6 @@ const file = readline.createInterface({
 
 console.log("Running with file " + fileName)
 
-let partOneScore = 0;
-let partTwoScore = 0;
 let directoryPath: string[] = [];
 let directories: {[id: string] : number} = {};
 
@@ -20,23 +18,23 @@ file.on('line', (line) => {
 });
 
 file.on('close', () => {
-    partOne()
-    partTwo()
-    console.log("Part One: " + partOneScore);
-    console.log("Part Two: " + partTwoScore);
+    console.log("Part One: " + partOne());
+    console.log("Part Two: " + partTwo());
 })
 
-const partOne = () => {
+const partOne = (): number => {
+    let score = 0;
     Object.values(directories).forEach((size) => {
-        if (size <= 100000){
-            partOneScore += size
+        if (size <= 100_000){
+            score += size
         }
     });
+    return score
 }
 
-const partTwo = () => {
-    const maxSpace = 70000000;
-    const requiredFreeSpace = 30000000;
+const partTwo = (): number => {
+    const maxSpace = 70_000_000;
+    const requiredFreeSpace = 30_000_000;
     const currentUsage = directories['/'];
     const currentSpace = maxSpace - currentUsage
     const requiredSpace = requiredFreeSpace - currentSpace;
@@ -45,8 +43,7 @@ const partTwo = () => {
 
     for (let size of sizes){
         if (size > requiredSpace) {
-            partTwoScore = size
-            return;
+            return size
         }
     }
 }
