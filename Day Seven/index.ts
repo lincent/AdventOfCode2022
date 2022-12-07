@@ -20,7 +20,6 @@ file.on('line', (line) => {
 });
 
 file.on('close', () => {
-    console.log(directories)
     partOne()
     partTwo()
     console.log("Part One: " + partOneScore);
@@ -28,12 +27,11 @@ file.on('close', () => {
 })
 
 const partOne = () => {
-    for (let directory in directories){
-        let directorySize = Number(directories[directory]);
-        if (directorySize <= 100000){
-            partOneScore += directorySize
+    Object.values(directories).forEach((size) => {
+        if (size <= 100000){
+            partOneScore += size
         }
-    }
+    });
 }
 
 const partTwo = () => {
@@ -43,12 +41,7 @@ const partTwo = () => {
     const currentSpace = maxSpace - currentUsage
     const requiredSpace = requiredFreeSpace - currentSpace;
 
-    const sizes: number[] = [];
-    for (let dir in directories){
-        sizes.push(directories[dir])
-    }
-
-    sizes.sort((a,b) => a - b)
+    const sizes = Object.values(directories).sort((a,b) => a - b);
 
     for (let size of sizes){
         if (size > requiredSpace) {
